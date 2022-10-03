@@ -1,5 +1,6 @@
 ---
 title: "index"
+author: "Ruqaya, Min Ha, Parushya"
 format: html
 editor: visual
 ---
