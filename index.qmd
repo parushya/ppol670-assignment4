@@ -1,6 +1,190 @@
 ---
-title: "index"
+title: "PPOL670 Assignment 4"
 author: "Ruqaya, Min Ha, Parushya"
 format: html
 editor: visual
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{r setup, include =FALSE}
+# Setting some global options
+knitr::opts_chunk$set(
+	echo = TRUE,
+	fig.align = "center",
+	message = FALSE,
+	warning = FALSE
+)
+options(kableExtra.auto_format = FALSE)
+# Loading packages ----
+
+# check.packages function: install and load multiple R packages.
+# Found this function here: https://gist.github.com/smithdanielle/9913897 on 2019/06/17
+# Check to see if packages are installed. Install them if they are not, then load them into the R session.
+check.packages <- function(pkg) {
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg)) {
+    install.packages(new.pkg, dependencies = TRUE)
+  }
+  sapply(pkg, require, character.only = TRUE)
+}
+
+
+# Check if packages are installed and loaded:
+packages <- c("janitor", "tidyverse","ggthemes",
+              "utils", "here","knitr","kableExtra","ggrepel",
+              "scales","ggpubr", "tools")
+check.packages(packages)
+
+# Theme update
+theme_set(theme_bw())
+theme_update(plot.margin = unit(c(1,1,1,1), "cm"),
+             panel.border = element_blank(),
+             legend.position = "bottom",
+             plot.caption = element_text(size = 7, face = "italic"))
+
+```
+
+# Unemployment in Labor Force
+
+To answer this, we look at the unemployment data from across the world.[^1].
+
+[^1]: Data sourced from [World Bank Open Data Reository](https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart)
+
+```{r load-data}
+# This File has unemployment rate for different countries across time
+data_unemp <- read_csv("data/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_4570923/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_4570923.csv", skip = 3)
+
+# This file has classification according to regions and income groups countries are in today
+data_region <- read_csv("data/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_4570923/Metadata_Country_API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_4570923.csv")
+
+# Merging
+
+working_Data <- data_unemp %>% 
+  left_join(
+    data_region %>% select(c("Country Code","Region","IncomeGroup")),
+    by = "Country Code") %>%  # Joining According to Country Code
+  as_tibble() %>% 
+  filter( !is.na(Region) # Removing Countries which do not have a Region Assigned
+          )
+
+# Converting to Long
+working_Data_long <- working_Data %>% 
+  pivot_longer(
+    cols = starts_with(c("19","20")),
+    names_to = "Year",
+    values_to = "Unemployment"
+  ) %>% 
+  select( 
+    c("Country Name", "Region","IncomeGroup","Year","Unemployment")
+          ) %>% 
+   mutate(
+    IncomeGroup = factor(IncomeGroup, levels = c("High income", "Upper middle income", "Lower middle income","Low income"))
+  )
+
+# Taking Years for which Unemployment NAs are not a big proportion
+summary_year <- working_Data_long %>% 
+  group_by(Year) %>% 
+  summarize(
+    n_nas = sum(is.na(Unemployment))
+  )
+# Post 1990 NAs are just around for 15% of the countries
+working_Data_long <- working_Data_long %>% 
+  mutate( 
+    Year = as.integer(Year)
+    ) %>% 
+  filter( Year >= 1991 & !is.na(IncomeGroup))
+```
+
+# How has World Changed?
+
+```{r world}
+working_Data_long %>% 
+  ggplot( aes( x = Year, y = Unemployment, group = Year)) +
+  geom_boxplot(show.legend = FALSE, outlier.alpha = 0.5) + 
+  labs(x = "Year", y = "Unemployment Rate", title = "Across World") + 
+  theme_minimal() 
+
+```
+Global Unemp levels have remain similar in this period. But the outliers have come closer.
+
+
+# What About Regions?
+
+```{r region, echo=TRUE}
+working_Data_long %>% 
+  group_by( Year, Region) %>% 
+  summarise(
+    mean_unemp = mean(Unemployment, na.rm = TRUE)
+  ) %>% 
+  ggplot( aes( x =  Year, y = mean_unemp/100, group = Region, color = Region)) +
+  geom_point(shape = 4) +
+  geom_line() +
+  labs(
+    x = "Year", 
+    y = "Unemployment Rate", title = "Across Regions",
+    color = "World Regions") + 
+  theme_minimal() + 
+  scale_y_continuous(labels = scales::percent) + 
+  scale_color_manual(values = RColorBrewer::brewer.pal(7, "Set2")) +
+  theme(
+    legend.position = "bottom"
+  )
+
+```
+
+Disparaity between regions.
+The relative positions of regions at the starting and end of study period.
+Regions with maximum fluctuatuons
+
+# Across Countries in Different Income Groups
+
+```{r high-income}
+working_Data_long %>% 
+  filter( Year == 2021) %>% 
+  group_by(Region) %>% 
+  mutate( n_countries = n()) %>% 
+group_by(IncomeGroup, add = TRUE) %>% 
+  summarise(
+    perc = n()/first(n_countries)
+  ) %>% 
+  ggplot( aes( x = Region, y = perc, fill =  IncomeGroup)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent) + 
+  scale_color_manual(values = RColorBrewer::brewer.pal(7, "Set2")) +
+  theme(
+    legend.position = "right"
+  ) +
+  coord_flip() +
+  labs(
+    y = "Percent of Countries", 
+    x = "Regions", title = "Proportion of Countries by Income Group",
+    fill = "Income Group") 
+
+```
+Today's WB categiorisation of countries according to which income group they lie in.
+WHich regions have more or lesss.
+
+
+## Change Across Regions and Countries in Different Income Groups in them
+
+```{r fig.height=12, fig.width=20}
+ working_Data_long %>% 
+  filter( Year %in% c("1991", "2021")) %>% 
+  pivot_wider(
+    id_cols = c("Country Name", "Region", "IncomeGroup"),
+    names_from = Year, values_from = Unemployment
+  ) %>% 
+  ggplot( aes(x = `1991`/100, y = `2021`/100)) +
+  geom_point() +
+  facet_grid(IncomeGroup~Region) +
+  scale_x_log10(labels = scales::percent) +
+  scale_y_log10(labels = scales::percent) +
+  geom_abline( alpha = 0.3) +
+  labs(
+    y = "Unemloyment in 2021", 
+    x = "Unemloyment in 1991", title = "Change across Income Groups X Regions") +
+  theme( text = element_text(size = 17),
+         panel.spacing = unit(2, "lines"))
+```
+We have used log  base 10 scale for both x and y axis here.
