@@ -111,7 +111,7 @@ working_Data_long %>%
   )
 
 ```
-Global Unemp levels have remain similar in this period. But the outliers have come closer.
+In this figure, we see that over the years the levels of unemployment has reduced across the world, and the disparity has also reduced. In addition, the number of outlier have come together. Since this is a global impact, it could be because of global economic policies on poverty, job creation, and equal access to opportunities, in addition to improved national policies.  
 
 
 # What About Regions?
@@ -139,9 +139,7 @@ working_Data_long %>%
 
 ```
 
-Disparaity between regions.
-The relative positions of regions at the starting and end of study period.
-Regions with maximum fluctuatuons
+This line graph shows the disparity of unemployment rate between regions. Regions such as East Asia, South Asia, and Sub-Saharan Africa have lesser fluctuations over the years, whereas regions such as North Africa, Europe and Central Asia have significant fluctuations. This could be because of effective economic policies, especially where unemployment rates dip in North Africa and Europe and Central Asia. Furthermore, the overall spike in unemployment rates in late 2019 could be explained by the emeregence of Coronavirus in Wuhan, China.  
 
 # Across Countries in Different Income Groups
 
@@ -169,8 +167,7 @@ group_by(IncomeGroup, add = TRUE) %>%
     fill = "Income Group") 
 
 ```
-Today's WB categorization of countries according to which income group they lie in.
-WHich regions have more or lesss.
+When it comes to High Income, North America (100%) and Europe & Central Asia (62%) have the highest rates in comparison to the other regions. Latin America & Caribbeans (42%-43%) comes close to two regions, and ranks 3rd in High Income rates. South Asia (70%) and Sub-Saharan Africa (48%-49%) rank highest in Lower Middle Income, while MENA region and East Asia & Pacific (35%-36%) rank 3rd and 4th in the same category of income. On Low Income, Sub-Saharan Africa ranks highest with 50 percent of its population with high unemployment and poverty rates. Overall, the graph shows that Sub-Saharan Africa has the highest Low Income rates, while North America and Europe & Central Asia have the greatest rank High Income rates.  
 
 
 ## Change Across Regions and Countries in Different Income Groups in them
