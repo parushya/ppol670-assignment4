@@ -100,10 +100,15 @@ working_Data_long <- working_Data_long %>%
 
 ```{r world}
 working_Data_long %>% 
-  ggplot( aes( x = Year, y = Unemployment, group = Year)) +
-  geom_boxplot(show.legend = FALSE, outlier.alpha = 0.5) + 
+  ggplot( aes( x = Year, y = Unemployment)) +
+  geom_boxplot(aes(group = Year),show.legend = FALSE, outlier.alpha = 0.5, alpha = 0.5) + 
+  geom_smooth(method = "lm", color = "blue")+
   labs(x = "Year", y = "Unemployment Rate", title = "Across World") + 
-  theme_minimal() 
+  theme_minimal() +
+  scale_color_manual(values = RColorBrewer::brewer.pal(7, "Set2")) +
+  theme(
+    legend.position = "bottom"
+  )
 
 ```
 Global Unemp levels have remain similar in this period. But the outliers have come closer.
@@ -118,11 +123,12 @@ working_Data_long %>%
     mean_unemp = mean(Unemployment, na.rm = TRUE)
   ) %>% 
   ggplot( aes( x =  Year, y = mean_unemp/100, group = Region, color = Region)) +
-  geom_point(shape = 4) +
-  geom_line() +
+  geom_point(shape = 4, size = 4) +
+  geom_line( linetype = "solid") +
   labs(
     x = "Year", 
-    y = "Unemployment Rate", title = "Across Regions",
+    y = "Unemployment Rate", title = "Across Regions", 
+    subtitle = "1990-2022",
     color = "World Regions") + 
   theme_minimal() + 
   scale_y_continuous(labels = scales::percent) + 
@@ -159,10 +165,11 @@ group_by(IncomeGroup, add = TRUE) %>%
   labs(
     y = "Percent of Countries", 
     x = "Regions", title = "Proportion of Countries by Income Group",
+    subtitle = "As coded by World Bank in 2022",
     fill = "Income Group") 
 
 ```
-Today's WB categiorisation of countries according to which income group they lie in.
+Today's WB categorization of countries according to which income group they lie in.
 WHich regions have more or lesss.
 
 
