@@ -45,11 +45,12 @@ theme_update(plot.margin = unit(c(1,1,1,1), "cm"),
 
 ```
 
-# How has Unemployment Changed Across the World?
+# How has Unemployment Changed Across the World?[^1]
 
-Unemployment refers to the share of the labor force that is without work but available for and seeking employment. To answer the question posed above, we look at the unemployment data from across the world in the period 1990 to 2022.[^1].
+Unemployment refers to the share of the labor force that is without work but available for and seeking employment. To answer the question posed above, we look at the unemployment data from across the world in the period 1990 to 2022.[^2].
 
-[^1]: Data sourced from [World Bank Open Data Reository](https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart)
+[^1]: [Github Repository](https://github.com/parushya/ppol670-assignment4/commits/main)  
+[^2]: Data sourced from [World Bank Open Data Reository](https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart)
 
 ```{r load-data}
 # This File has unemployment rate for different countries across time
