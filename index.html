@@ -124,9 +124,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="unemployment-in-labor-force" class="level1">
-<h1>Unemployment in Labor Force</h1>
-<p>To answer this, we look at the unemployment data from across the world.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<section id="how-has-unemployment-changed-across-the-world" class="level1">
+<h1>How has Unemployment Changed Across the World?</h1>
+<p>Unemployment refers to the share of the labor force that is without work but available for and seeking employment. To answer the question posed above, we look at the unemployment data from across the world in the period 1990 to 2022.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This File has unemployment rate for different countries across time</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_unemp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_4570923/API_SL.UEM.TOTL.ZS_DS2_en_csv_v2_4570923.csv"</span>, <span class="at">skip =</span> <span class="dv">3</span>)</span>
@@ -179,12 +179,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>( <span class="at">x =</span> Year, <span class="at">y =</span> Unemployment)) <span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group =</span> Year),<span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">outlier.alpha =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"blue"</span>)<span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Unemployment Rate"</span>, <span class="at">title =</span> <span class="st">"Across World"</span>) <span class="sc">+</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">7</span>, <span class="st">"Set2"</span>)) <span class="sc">+</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Unemployment Rate"</span>, <span class="at">title =</span> <span class="st">"Changes Across all Countries in the World"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"The blue line represents the mean unemployment rate across the period"</span>) <span class="sc">+</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -193,7 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>In this figure, we see that over the years the levels of unemployment has reduced across the world, and the disparity has also reduced. In addition, the number of outlier have come together. Since this is a global impact, it could be because of global economic policies on poverty, job creation, and equal access to opportunities, in addition to improved national policies.</p>
+<p>In this figure, we see that over the years the aggregatelevels of unemployment has reamined same across the world. However, the disparity has also reduced slightly as the number of distance of outliers has become less. Since this is a global impact, it could be because of global economic policies on poverty, job creation, and equal access to opportunities, in addition to improved national policies.</p>
 </section>
 <section id="what-about-regions" class="level1">
 <h1>What About Regions?</h1>
@@ -225,7 +222,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>This line graph shows the disparity of unemployment rate between regions. Regions such as East Asia, South Asia, and Sub-Saharan Africa have lesser fluctuations over the years, whereas regions such as North Africa, Europe and Central Asia have significant fluctuations. This could be because of effective economic policies, especially where unemployment rates dip in North Africa and Europe and Central Asia. Furthermore, the overall spike in unemployment rates in late 2019 could be explained by the emeregence of Coronavirus in Wuhan, China.</p>
+<p>This line graph shows the disparity of unemployment rate between regions. Regions such as East Asia, South Asia, and Sub-Saharan Africa have lesser fluctuations over the years, whereas regions such as North Africa, Europe and Central Asia have significant fluctuations. This could be because of shocks in financial cycles that affect particular sectors on which countries in these regions are dependent.</p>
 </section>
 <section id="across-countries-in-different-income-groups" class="level1">
 <h1>Across Countries in Different Income Groups</h1>
@@ -259,9 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>When it comes to High Income, North America (100%) and Europe &amp; Central Asia (62%) have the highest rates in comparison to the other regions. Latin America &amp; Caribbeans (42%-43%) comes close to two regions, and ranks 3rd in High Income rates. South Asia (70%) and Sub-Saharan Africa (48%-49%) rank highest in Lower Middle Income, while MENA region and East Asia &amp; Pacific (35%-36%) rank 3rd and 4th in the same category of income. On Low Income, Sub-Saharan Africa ranks highest with 50 percent of its population with high unemployment and poverty rates. Overall, the graph shows that Sub-Saharan Africa has the highest Low Income rates, while North America and Europe &amp; Central Asia have the greatest rank High Income rates.</p>
-<section id="change-across-regions-and-countries-in-different-income-groups-in-them" class="level2">
-<h2 class="anchored" data-anchor-id="change-across-regions-and-countries-in-different-income-groups-in-them">Change Across Regions and Countries in Different Income Groups in them</h2>
+<p>When it comes to High Income Countries, North America (100%) and Europe &amp; Central Asia (62%) have the highest rates in comparison to the other regions. Latin America &amp; Caribbeans (42%-43%) comes close to two regions, and ranks 3rd in High Income rates. South Asia (70%) and Sub-Saharan Africa (48%-49%) rank highest in Lower Middle Income, while MENA region and East Asia &amp; Pacific (35%-36%) rank 3rd and 4th in the same category of income. On Low Income, Sub-Saharan Africa ranks highest with 50 percent of its population with high unemployment and poverty rates. Overall, the graph shows that Sub-Saharan Africa has the highest Low Income rates, while North America and Europe &amp; Central Asia have the greatest rank High Income rates.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a> working_Data_long <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1991"</span>, <span class="st">"2021"</span>)) <span class="sc">%&gt;%</span> </span>
@@ -277,9 +272,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>( <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Unemloyment in 2021"</span>, </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Unemloyment in 1991"</span>, <span class="at">title =</span> <span class="st">"Change across Income Groups X Regions"</span>) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"lines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Unemloyment in 1991"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Change across Income Groups X Regions"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Data from All Countries"</span>) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"lines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -288,8 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>We have used log base 10 scale for both x and y axis here.</p>
-</section>
+<p>In this particular graph, we have applied the blog base 10 transformation to both the x and y-axis. Also, in comparing the unemployment rate in 1991 and 2021, we have added the 45-degree line to the graph. As the 45-degree line has a slope of one, the upper left of the 45-degree line indicates that the y value(in this case, the unemployment rate in 2021) is higher than the x value(the unemployment rate in 1991). Except for the high-income group in Europe &amp; Central Asia, we can observe that there is a tendency of a rising unemployment rate in 2021 than in 1991. In East Asia, the high-income group has a slightly higher unemployment rate than other income groups. The values gathered around the 45-degree line in Sub-Saharan Africa indicate that the unemployment rate in the region has not gone through dramatic change. Considering the right-top values indicate a high-high unemployment rate, it should be noted that the lower-middle income group in the Middle East &amp; North Africa has had over 10% of the high unemployment rate in both years.</p>
 </section>
 
 

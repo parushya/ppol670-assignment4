@@ -45,9 +45,9 @@ theme_update(plot.margin = unit(c(1,1,1,1), "cm"),
 
 ```
 
-# Unemployment in Labor Force
+# How has Unemployment Changed Across the World?
 
-To answer this, we look at the unemployment data from across the world.[^1].
+Unemployment refers to the share of the labor force that is without work but available for and seeking employment. To answer the question posed above, we look at the unemployment data from across the world in the period 1990 to 2022.[^1].
 
 [^1]: Data sourced from [World Bank Open Data Reository](https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?view=chart)
 
@@ -103,15 +103,12 @@ working_Data_long %>%
   ggplot( aes( x = Year, y = Unemployment)) +
   geom_boxplot(aes(group = Year),show.legend = FALSE, outlier.alpha = 0.5, alpha = 0.5) + 
   geom_smooth(method = "lm", color = "blue")+
-  labs(x = "Year", y = "Unemployment Rate", title = "Across World") + 
-  theme_minimal() +
-  scale_color_manual(values = RColorBrewer::brewer.pal(7, "Set2")) +
-  theme(
-    legend.position = "bottom"
-  )
+  labs(x = "Year", y = "Unemployment Rate", title = "Changes Across all Countries in the World",
+       caption = "The blue line represents the mean unemployment rate across the period") + 
+  theme_minimal() 
 
 ```
-In this figure, we see that over the years the levels of unemployment has reduced across the world, and the disparity has also reduced. In addition, the number of outlier have come together. Since this is a global impact, it could be because of global economic policies on poverty, job creation, and equal access to opportunities, in addition to improved national policies.  
+In this figure, we see that over the years the  aggregatelevels of unemployment has reamined same across the world. However,  the disparity has also reduced slightly as the number of distance of outliers has become less. Since this is a global impact, it could be because of global economic policies on poverty, job creation, and equal access to opportunities, in addition to improved national policies.  
 
 
 # What About Regions?
@@ -139,7 +136,7 @@ working_Data_long %>%
 
 ```
 
-This line graph shows the disparity of unemployment rate between regions. Regions such as East Asia, South Asia, and Sub-Saharan Africa have lesser fluctuations over the years, whereas regions such as North Africa, Europe and Central Asia have significant fluctuations. This could be because of effective economic policies, especially where unemployment rates dip in North Africa and Europe and Central Asia. Furthermore, the overall spike in unemployment rates in late 2019 could be explained by the emeregence of Coronavirus in Wuhan, China.  
+This line graph shows the disparity of unemployment rate between regions. Regions such as East Asia, South Asia, and Sub-Saharan Africa have lesser fluctuations over the years, whereas regions such as North Africa, Europe and Central Asia have significant fluctuations. This could be because of shocks in financial cycles that affect particular sectors on which countries in these regions are dependent.  
 
 # Across Countries in Different Income Groups
 
@@ -167,10 +164,7 @@ group_by(IncomeGroup, add = TRUE) %>%
     fill = "Income Group") 
 
 ```
-When it comes to High Income, North America (100%) and Europe & Central Asia (62%) have the highest rates in comparison to the other regions. Latin America & Caribbeans (42%-43%) comes close to two regions, and ranks 3rd in High Income rates. South Asia (70%) and Sub-Saharan Africa (48%-49%) rank highest in Lower Middle Income, while MENA region and East Asia & Pacific (35%-36%) rank 3rd and 4th in the same category of income. On Low Income, Sub-Saharan Africa ranks highest with 50 percent of its population with high unemployment and poverty rates. Overall, the graph shows that Sub-Saharan Africa has the highest Low Income rates, while North America and Europe & Central Asia have the greatest rank High Income rates.  
-
-
-## Change Across Regions and Countries in Different Income Groups in them
+When it comes to High Income Countries, North America (100%) and Europe & Central Asia (62%) have the highest rates in comparison to the other regions. Latin America & Caribbeans (42%-43%) comes close to two regions, and ranks 3rd in High Income rates. South Asia (70%) and Sub-Saharan Africa (48%-49%) rank highest in Lower Middle Income, while MENA region and East Asia & Pacific (35%-36%) rank 3rd and 4th in the same category of income. On Low Income, Sub-Saharan Africa ranks highest with 50 percent of its population with high unemployment and poverty rates. Overall, the graph shows that Sub-Saharan Africa has the highest Low Income rates, while North America and Europe & Central Asia have the greatest rank High Income rates.  
 
 ```{r fig.height=12, fig.width=20}
  working_Data_long %>% 
@@ -187,8 +181,10 @@ When it comes to High Income, North America (100%) and Europe & Central Asia (62
   geom_abline( alpha = 0.3) +
   labs(
     y = "Unemloyment in 2021", 
-    x = "Unemloyment in 1991", title = "Change across Income Groups X Regions") +
+    x = "Unemloyment in 1991",
+    title = "Change across Income Groups X Regions",
+    subtitle = "Data from All Countries") +
   theme( text = element_text(size = 17),
          panel.spacing = unit(2, "lines"))
 ```
-We have used log  base 10 scale for both x and y axis here.
+In this particular graph, we have applied the blog base 10 transformation to both the x and y-axis. Also, in comparing the unemployment rate in 1991 and 2021, we have added the 45-degree line to the graph. As the 45-degree line has a slope of one, the upper left of the 45-degree line indicates that the y value(in this case, the unemployment rate in 2021) is higher than the x value(the unemployment rate in 1991). Except for the high-income group in Europe & Central Asia, we can observe that there is a tendency of a rising unemployment rate in 2021 than in 1991. In East Asia, the high-income group has a slightly higher unemployment rate than other income groups. The values gathered around the 45-degree line in Sub-Saharan Africa indicate that the unemployment rate in the region has not gone through dramatic change. Considering the right-top values indicate a high-high unemployment rate, it should be noted that the lower-middle income group in the Middle East & North Africa has had over 10% of the high unemployment rate in both years.  
